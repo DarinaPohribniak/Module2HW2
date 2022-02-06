@@ -6,17 +6,21 @@ namespace Module2HW2
 {
     public class Run
     {
-        private Cart _cart = new Cart();
-
+        private Cart _cart;
         public void Runner()
         {
             Console.WriteLine("Items in our store:");
-            ShowAllProducts(_cart.GetAllProducts());
+            ShowAllProducts(Store.GetAllProducts());
             Console.WriteLine();
-            _cart.FillCartRandomProducts(5);
-            List<Product> myCart = _cart.GetCart();
+            Store.FillCartRandomProducts(5);
+            List<Product> myCart = Store.GetProducts();
+            _cart = new Cart(myCart);
             ShowCart(myCart);
             ConfirmStatus();
+            Order order = new Order(StatusOrder.InProgress, _cart.GoodsInCart);
+            string detailsOfReceipt = order.GetDetailsOfReceipt(_cart.GoodsInCart);
+            string reciept = string.Concat(detailsOfReceipt, ShowCart(order.FinalOrder));
+            ExportToFile(reciept);
         }
 
         public void ChangeOrder()
@@ -45,7 +49,6 @@ namespace Module2HW2
 
                     default:
                         {
-                            ConfirmStatus();
                             break;
                         }
                 }
@@ -71,11 +74,6 @@ namespace Module2HW2
 
                 ChangeOrder();
             }
-
-            Order order = new Order(StatusOrder.InProgress, _cart.GetCart());
-            order.Reciept = order.GetDetailsOfReceipt(_cart.GetCart());
-            string reciept = string.Concat(order.Reciept, ShowCart(order.FinalOrder));
-            ExportToFile(reciept);
         }
 
         public string ShowCart(List<Product> cart)

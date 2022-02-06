@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Module2HW2
 {
@@ -15,25 +12,12 @@ namespace Module2HW2
     public class Order
     {
         private string _receipt;
-        private List<Product> _finalOrder;
+        private List<Product> _products;
 
         public Order(StatusOrder status, List<Product> goodsInCart)
         {
             StatusOrder = status;
-            _finalOrder = goodsInCart;
-        }
-
-        public string Reciept
-        {
-            get
-            {
-                return _receipt;
-            }
-
-            set
-            {
-                _receipt = Reciept;
-            }
+            _products = goodsInCart;
         }
 
         public StatusOrder StatusOrder { get; set; }
@@ -41,12 +25,12 @@ namespace Module2HW2
         {
             get
             {
-                return _finalOrder;
+                return _products;
             }
 
             private set
             {
-                _finalOrder = FinalOrder;
+                _products = FinalOrder;
             }
         }
 
@@ -55,7 +39,6 @@ namespace Module2HW2
             Random rnd = new Random();
             int numberOfReceipt;
             numberOfReceipt = rnd.Next(1, 100);
-            /*string message;*/
             if (order.Count != 0)
             {
                 Console.WriteLine("Your order has been generated");
